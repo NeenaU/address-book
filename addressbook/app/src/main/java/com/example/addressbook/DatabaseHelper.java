@@ -9,10 +9,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "contacts.db";
     public static final int DATABASE_VERSION = 1;
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    /*
+    DatabaseHelper constructor
+     */
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /*
+    Method to create the database
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_CONTACTS_TABLE = "CREATE TABLE " +
