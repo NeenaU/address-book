@@ -9,4 +9,6 @@
     <string name="email_string">Email</string>
     <string name="add_string">Add</string>
     <string name="SomeHint" />
+    <string name="search_hint">Search by name</string>
+    <string name="app_label">Address Book</string>
 </resources>

@@ -75,10 +75,10 @@
         android:id="@+id/phone_number_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
         android:autofillHints=""
+        android:ems="10"
         android:hint="@string/SomeHint"
+        android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/email_entry"
         app:layout_constraintEnd_toEndOf="@+id/phone_number_text"
         app:layout_constraintHorizontal_bias="0.0"
@@ -107,34 +107,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="81dp"
+        android:autofillHints=""
         android:ems="10"
+        android:hint="@string/SomeHint"
         android:inputType="textPersonName"
         android:minWidth="100dp"
         android:minHeight="40dp"
         android:text=""
-        android:autofillHints=""
-        android:hint="@string/SomeHint"
         app:layout_constraintBottom_toTopOf="@+id/phone_number_entry"
         app:layout_constraintEnd_toEndOf="@+id/address_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/address_text"
         app:layout_constraintTop_toBottomOf="@+id/name_entry"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.101" />
 
     <EditText
         android:id="@+id/email_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
         android:autofillHints=""
+        android:ems="10"
         android:hint="@string/SomeHint"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/email_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/email_text"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.752" />
+        app:layout_constraintVertical_bias="0.766" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"

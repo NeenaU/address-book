@@ -18,6 +18,10 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
