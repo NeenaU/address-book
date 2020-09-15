@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/*
 public class SearchableActivity extends AppCompatActivity {
 
     @Override
@@ -17,7 +17,7 @@ public class SearchableActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
+            search(query);
         }
     }
-}
+}*/
