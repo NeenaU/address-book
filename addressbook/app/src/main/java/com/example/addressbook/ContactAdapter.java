@@ -2,13 +2,13 @@ package com.example.addressbook;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-/*
+
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private Context mContext;
@@ -21,33 +21,59 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameText;
-        public TextView addressText;
-        public TextView numberText;
-        public TextView emailText;
+        private TextView nameText;
+        private TextView addressText;
+        private TextView numberText;
+        private TextView emailText;
 
-        public ContactViewHolder(@NonNull View itemView) {
+        public ContactViewHolder(View itemView) {
             super(itemView);
+
+            nameText = itemView.findViewById(R.id.textview_name);
+            addressText = itemView.findViewById(R.id.textview_address);
+            numberText = itemView.findViewById(R.id.textview_phone_number);
+            emailText = itemView.findViewById(R.id.textview_email);
         }
     }
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.contact_item, parent, false);
+        return new ContactViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
+        if (!mCursor.moveToPosition(position)) {
+            return;
+        }
 
-    }
+        String name = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_NAME));
+        String address = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_ADDRESS));
+        String number = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_PHONE_NUMBER));
+        String email = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_EMAIL));
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        holder.nameText.setText(name);
+        holder.addressText.setText(address);
+        holder.numberText.setText(number);
+        holder.emailText.setText(email);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mCursor.getCount();
     }
-}*/
+
+    public void swapCursor(Cursor newCursor) {
+        if (mCursor != null) {
+            mCursor.close();
+        }
+
+        mCursor = newCursor;
+
+        if (newCursor != null) {
+            notifyDataSetChanged();
+        }
+    }
+}

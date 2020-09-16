@@ -1,6 +1,7 @@
 package com.example.addressbook;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class AddNewContact extends AppCompatActivity {
 
     private SQLiteDatabase database;
+    private ContactAdapter adapter = MainActivity.adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +77,24 @@ public class AddNewContact extends AppCompatActivity {
 
             database.insert(Database.ContactsEntry.TABLE_NAME, null, cv);
 
+            adapter.swapCursor(getAllItems());
+
             nameEntry.getText().clear();
             addressEntry.getText().clear();
             phoneEntry.getText().clear();
             emailEntry.getText().clear();
         }
+    }
+
+    private Cursor getAllItems() {
+        return database.query(
+                Database.ContactsEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Database.ContactsEntry.COLUMN_NAME
+        );
     }
 }
