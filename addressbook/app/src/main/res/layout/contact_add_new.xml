@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_entry"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:text="@string/add_string" />
 
     <TextView
@@ -41,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/address_string"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/address_entry"
         app:layout_constraintEnd_toEndOf="@+id/name_entry"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,61 +85,61 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/phone_number_text"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintVertical_bias="0.895" />
 
     <EditText
         android:id="@+id/name_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
+        android:hint="@string/SomeHint"
         android:inputType="textPersonName"
         android:text=""
-        android:autofillHints=""
-        android:hint="@string/SomeHint"
         app:layout_constraintBottom_toTopOf="@+id/phone_number_entry"
         app:layout_constraintEnd_toEndOf="@+id/name_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/name_text"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.363" />
+        app:layout_constraintVertical_bias="0.32" />
 
     <EditText
         android:id="@+id/address_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="81dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/SomeHint"
-        android:inputType="textPersonName"
+        android:inputType="textPostalAddress|textMultiLine"
+        android:lines="20"
         android:minWidth="100dp"
         android:minHeight="40dp"
+        android:minLines="6"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/phone_number_entry"
         app:layout_constraintEnd_toEndOf="@+id/address_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/address_text"
         app:layout_constraintTop_toBottomOf="@+id/name_entry"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.475" />
 
     <EditText
         android:id="@+id/email_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="144dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/SomeHint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/email_text"
+        app:layout_constraintEnd_toEndOf="@+id/phone_number_entry"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/email_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.766" />
+        app:layout_constraintStart_toStartOf="@+id/phone_number_entry" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
