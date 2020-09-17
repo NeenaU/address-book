@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
-import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         database = databaseHelper.getWritableDatabase();
 
+        //Display contacts in a RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ContactAdapter(this, getAllItems());
         recyclerView.setAdapter(adapter);
 
+        //Display floating button used to add a new contact
         FloatingActionButton fab = findViewById(R.id.add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,13 +43,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
+    //Method to get contacts from the database for the RecyclerView
     private Cursor getAllItems() {
         return database.query(
                 Database.ContactsEntry.TABLE_NAME,

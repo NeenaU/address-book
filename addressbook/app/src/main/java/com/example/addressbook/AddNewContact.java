@@ -94,6 +94,7 @@ public class AddNewContact extends AppCompatActivity {
         }
     }
 
+    //Method to get all contacts from the database
     private Cursor getAllItems() {
         return database.query(
                 Database.ContactsEntry.TABLE_NAME,
