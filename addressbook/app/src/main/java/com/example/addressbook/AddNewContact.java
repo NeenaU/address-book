@@ -91,6 +91,9 @@ public class AddNewContact extends AppCompatActivity {
             addressEntry.getText().clear();
             phoneEntry.getText().clear();
             emailEntry.getText().clear();
+
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact added", Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
     }
 

@@ -13,10 +13,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     private Context mContext;
     private Cursor mCursor;
+    private OnItemClickListener mListener;
 
     public ContactAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -33,6 +42,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             addressText = itemView.findViewById(R.id.textview_address);
             numberText = itemView.findViewById(R.id.textview_phone_number);
             emailText = itemView.findViewById(R.id.textview_email);
+        }
+
+        itemView.setOnClickListener(new View.OnClickListener()){
+
         }
     }
 
@@ -53,11 +66,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         String address = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_ADDRESS));
         String number = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_PHONE_NUMBER));
         String email = mCursor.getString(mCursor.getColumnIndex(Database.ContactsEntry.COLUMN_EMAIL));
+        long id = mCursor.getLong(mCursor.getColumnIndex(Database.ContactsEntry._ID));
 
         holder.nameText.setText(name);
         holder.addressText.setText(address);
         holder.numberText.setText(number);
         holder.emailText.setText(email);
+        holder.itemView.setTag(id);
     }
 
     @Override
