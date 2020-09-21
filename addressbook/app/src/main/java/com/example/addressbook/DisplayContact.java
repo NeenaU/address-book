@@ -16,6 +16,8 @@ import com.google.android.material.snackbar.Snackbar;
 public class DisplayContact extends AppCompatActivity {
 
     private SQLiteDatabase database;
+    private ContactAdapter adapter = MainActivity.adapter;
+
     private EditText nameEntry;
     private EditText addressEntry;
     private EditText phoneEntry;
@@ -64,6 +66,7 @@ public class DisplayContact extends AppCompatActivity {
             }
         });
 
+        //Go back to the main screen when the back button is pressed
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +75,7 @@ public class DisplayContact extends AppCompatActivity {
         });
     }
 
+    //Method that gets the information for a specific contact from the database using the contact's id
     private void getContactInfo(long id){
         Cursor cursor = database.rawQuery("SELECT * FROM " + Database.ContactsEntry.TABLE_NAME + " " +
                 "WHERE " + Database.ContactsEntry._ID + "=" + id, null);
@@ -94,14 +98,33 @@ public class DisplayContact extends AppCompatActivity {
         snackbar.show();
     }
 
+    //Method to delete a contact from the database
     private void deleteContact(long id) {
-
-
         database.delete(Database.ContactsEntry.TABLE_NAME,
                 Database.ContactsEntry._ID + "=" + id, null);
 
+        //Update the RecyclerView
+        adapter.swapCursor(getAllItems());
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        //Show snackbar indicating the contact has been deleted
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact deleted", Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
+    //Method to get contacts from the database for the RecyclerView
+    private Cursor getAllItems() {
+        return database.query(
+                Database.ContactsEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Database.ContactsEntry.COLUMN_NAME
+        );
+    }
 }
