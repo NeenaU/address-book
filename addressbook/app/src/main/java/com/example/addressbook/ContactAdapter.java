@@ -24,7 +24,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         void onItemClick(int position);
     }
 
-    public void setOnClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
@@ -35,17 +35,25 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         private TextView numberText;
         private TextView emailText;
 
-        public ContactViewHolder(View itemView) {
+        public ContactViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             nameText = itemView.findViewById(R.id.textview_name);
             addressText = itemView.findViewById(R.id.textview_address);
             numberText = itemView.findViewById(R.id.textview_phone_number);
             emailText = itemView.findViewById(R.id.textview_email);
-        }
 
-        itemView.setOnClickListener(new View.OnClickListener()){
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
