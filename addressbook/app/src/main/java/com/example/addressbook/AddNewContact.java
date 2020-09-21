@@ -45,6 +45,7 @@ public class AddNewContact extends AppCompatActivity {
             }
         });
 
+        //Go back to main activity when back button is pressed
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

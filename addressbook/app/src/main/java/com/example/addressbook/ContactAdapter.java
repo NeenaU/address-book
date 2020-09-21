@@ -1,6 +1,7 @@
 package com.example.addressbook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,30 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private Context mContext;
-    private Cursor mCursor;
+    protected Cursor mCursor;
     private OnItemClickListener mListener;
 
-    public ContactAdapter(Context context, Cursor cursor) {
+    public ContactAdapter(Context context, Cursor cursor, OnItemClickListener listener) {
         mContext = context;
         mCursor = cursor;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder {
+    public interface OnItemClickListener{
+        void onClick(View v, int position);
+    }
+
+    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView nameText;
         private TextView addressText;
         private TextView numberText;
         private TextView emailText;
 
-        public ContactViewHolder(View itemView, final OnItemClickListener listener) {
+        public ContactViewHolder(View itemView){
             super(itemView);
 
             nameText = itemView.findViewById(R.id.textview_name);
@@ -43,17 +41,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             numberText = itemView.findViewById(R.id.textview_phone_number);
             emailText = itemView.findViewById(R.id.textview_email);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(itemView, getAdapterPosition());
         }
     }
 
@@ -65,7 +58,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     }
 
     @Override
-    public void onBindViewHolder(ContactViewHolder holder, int position) {
+    public void onBindViewHolder(final ContactViewHolder holder, int position) {
         if (!mCursor.moveToPosition(position)) {
             return;
         }
@@ -81,6 +74,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         holder.numberText.setText(number);
         holder.emailText.setText(email);
         holder.itemView.setTag(id);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DisplayContact.class);
+                long id = (long) holder.itemView.getTag();
+                intent.putExtra("id", id);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
