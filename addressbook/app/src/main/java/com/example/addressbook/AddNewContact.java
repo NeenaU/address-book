@@ -1,14 +1,11 @@
 package com.example.addressbook;
 
-import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,7 +17,6 @@ import com.google.android.material.snackbar.Snackbar;
 public class AddNewContact extends AppCompatActivity {
 
     private SQLiteDatabase database;
-    private ContactAdapter adapter = MainActivity.adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

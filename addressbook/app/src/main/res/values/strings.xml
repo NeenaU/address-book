@@ -13,4 +13,6 @@
     <string name="SomeHint"/>
     <string name="search_hint">Search by name</string>
     <string name="app_label">Address Book</string>
+    <string name="confirm_string">Confirm</string>
+    <string name="cancel_string">Cancel</string>
 </resources>

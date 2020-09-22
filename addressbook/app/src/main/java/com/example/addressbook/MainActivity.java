@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getStringExtra("result");
+
                 if (result.equals("add")) {
                     adapter.swapCursor(getAllItems()); //Update cursor to display new contact
 
@@ -95,14 +96,18 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (requestCode == 2) {
             if(resultCode == Activity.RESULT_OK){
-
                 String result = data.getStringExtra("result");
+
                 if (result.equals("delete")) {
-                    adapter.swapCursor(getAllItems()); //Update cursor to display new contact
+                    adapter.swapCursor(getAllItems()); //Update cursor to remove contact
 
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact deleted", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
+            }
+
+            if (resultCode == Activity.RESULT_CANCELED) {
+                adapter.swapCursor(getAllItems());
             }
         }
     }

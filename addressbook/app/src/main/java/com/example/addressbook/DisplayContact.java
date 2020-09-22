@@ -1,9 +1,11 @@
 package com.example.addressbook;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,13 +18,16 @@ import com.google.android.material.snackbar.Snackbar;
 public class DisplayContact extends AppCompatActivity {
 
     private SQLiteDatabase database;
-    private ContactAdapter adapter = MainActivity.adapter;
 
     private EditText nameEntry;
     private EditText addressEntry;
     private EditText phoneEntry;
     private EditText emailEntry;
-    private long id;
+
+    private Button deleteButton;
+    private Button editButton;
+    private Button cancelButton;
+    private Button confirmButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,25 +49,49 @@ public class DisplayContact extends AppCompatActivity {
         phoneEntry = findViewById(R.id.phone_number_entry);
         emailEntry = findViewById(R.id.email_entry);
 
+        nameEntry.setEnabled(false);
+        addressEntry.setEnabled(false);
+        phoneEntry.setEnabled(false);
+        emailEntry.setEnabled(false);
+
+        //Get id from main activity, find contact info and display
         Intent intent = getIntent();
-        id = intent.getLongExtra("id", 0);
+        final long id = intent.getLongExtra("id", 0);
         getContactInfo(id);
 
         //Display button to edit a contact
-        Button editButton = findViewById(R.id.edit_button);
+        editButton = findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editContact(id);
+                editContact();
             }
         });
 
         //Display button to delete a contact
-        Button deleteButton = findViewById(R.id.delete_button);
+        deleteButton = findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteContact(id);
+            }
+        });
+
+        cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setVisibility(View.GONE);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelEdit();
+            }
+        });
+
+        confirmButton = findViewById(R.id.confirm_button);
+        confirmButton.setVisibility(View.GONE);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateContact(id);
             }
         });
 
@@ -92,7 +121,51 @@ public class DisplayContact extends AppCompatActivity {
         emailEntry.setText(email);
     }
 
-    private void editContact(long id) {
+    private void editContact() {
+
+        //Allow the user to change contact info
+        nameEntry.setEnabled(true);
+        addressEntry.setEnabled(true);
+        phoneEntry.setEnabled(true);
+        emailEntry.setEnabled(true);
+
+        //Hide delete button and show confirm and cancel button
+        deleteButton.setVisibility(View.GONE);
+        editButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.VISIBLE);
+        confirmButton.setVisibility(View.VISIBLE);
+    }
+
+    private void cancelEdit() {
+
+        //Prevent the user from changing contact info
+        nameEntry.setEnabled(false);
+        addressEntry.setEnabled(false);
+        phoneEntry.setEnabled(false);
+        emailEntry.setEnabled(false);
+
+        //Hide confirm and cancel button and show delete button
+        deleteButton.setVisibility(View.VISIBLE);
+        editButton.setVisibility(View.VISIBLE);
+        cancelButton.setVisibility(View.GONE);
+        confirmButton.setVisibility(View.GONE);
+    }
+
+    private void updateContact(long id) {
+
+        String name = nameEntry.getText().toString();
+        String address = addressEntry.getText().toString();
+        String phone = phoneEntry.getText().toString();
+        String email = emailEntry.getText().toString();
+
+        ContentValues cv = new ContentValues();
+        cv.put(Database.ContactsEntry.COLUMN_NAME, name);
+        cv.put(Database.ContactsEntry.COLUMN_ADDRESS, address);
+        cv.put(Database.ContactsEntry.COLUMN_PHONE_NUMBER, phone);
+        cv.put(Database.ContactsEntry.COLUMN_EMAIL, email);
+
+        database.update(Database.ContactsEntry.TABLE_NAME, cv, "_id="+id, null);
+        cancelEdit();
 
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Changes updated", Snackbar.LENGTH_LONG);
         snackbar.show();
@@ -103,26 +176,10 @@ public class DisplayContact extends AppCompatActivity {
         database.delete(Database.ContactsEntry.TABLE_NAME,
                 Database.ContactsEntry._ID + "=" + id, null);
 
-        //Intent intent = new Intent(this, MainActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //startActivity(intent);
-
+        //Go back to main activity
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("result","delete");
-        setResult(MainActivity.RESULT_OK,returnIntent);
+        returnIntent.putExtra("result","delete"); //indicate that a contact has just been deleted
+        setResult(MainActivity.RESULT_OK,returnIntent);       //so the relevant snackbar can be shown in main activity
         finish();
-    }
-
-    //Method to get contacts from the database for the RecyclerView
-    private Cursor getAllItems() {
-        return database.query(
-                Database.ContactsEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                Database.ContactsEntry.COLUMN_NAME
-        );
     }
 }
