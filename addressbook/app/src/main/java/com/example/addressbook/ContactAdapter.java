@@ -1,14 +1,18 @@
 package com.example.addressbook;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
@@ -78,12 +82,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, DisplayContact.class);
+                Activity origin = (Activity) mContext;
+                Intent intent = new Intent(origin, DisplayContact.class);
+
                 long id = (long) holder.itemView.getTag();
                 intent.putExtra("id", id);
-                mContext.startActivity(intent);
+
+                origin.startActivityForResult(intent, 2);
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("ContactAdapter", "onActivityResult");
     }
 
     @Override

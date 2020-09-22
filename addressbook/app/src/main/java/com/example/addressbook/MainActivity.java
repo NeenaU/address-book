@@ -1,5 +1,6 @@
 package com.example.addressbook;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(MainActivity.this, AddNewContact.class);
-                startActivity(intent2);
+                Intent intent = new Intent(MainActivity.this, AddNewContact.class);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -70,6 +72,39 @@ public class MainActivity extends AppCompatActivity {
 
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact deleted", Snackbar.LENGTH_LONG);
         snackbar.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("result");
+                if (result.equals("add")) {
+                    adapter.swapCursor(getAllItems()); //Update cursor to display new contact
+
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "New contact added", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "why", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
+        else if (requestCode == 2) {
+            if(resultCode == Activity.RESULT_OK){
+
+                String result = data.getStringExtra("result");
+                if (result.equals("delete")) {
+                    adapter.swapCursor(getAllItems()); //Update cursor to display new contact
+
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact deleted", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
+        }
     }
 
     //Method to get contacts from the database for the RecyclerView

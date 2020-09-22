@@ -103,16 +103,14 @@ public class DisplayContact extends AppCompatActivity {
         database.delete(Database.ContactsEntry.TABLE_NAME,
                 Database.ContactsEntry._ID + "=" + id, null);
 
-        //Update the RecyclerView
-        adapter.swapCursor(getAllItems());
+        //Intent intent = new Intent(this, MainActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //startActivity(intent);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-
-        //Show snackbar indicating the contact has been deleted
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact deleted", Snackbar.LENGTH_LONG);
-        snackbar.show();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result","delete");
+        setResult(MainActivity.RESULT_OK,returnIntent);
+        finish();
     }
 
     //Method to get contacts from the database for the RecyclerView

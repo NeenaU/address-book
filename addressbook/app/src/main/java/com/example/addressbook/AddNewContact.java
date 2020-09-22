@@ -1,7 +1,9 @@
 package com.example.addressbook;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -55,12 +57,6 @@ public class AddNewContact extends AppCompatActivity {
     }
 
     private void addContact() {
-        InputMethodManager inputManager = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
-
         EditText nameEntry = findViewById(R.id.name_entry);
         EditText addressEntry = findViewById(R.id.address_entry);
         EditText phoneEntry = findViewById(R.id.phone_number_entry);
@@ -86,15 +82,16 @@ public class AddNewContact extends AppCompatActivity {
 
             database.insert(Database.ContactsEntry.TABLE_NAME, null, cv);
 
-            adapter.swapCursor(getAllItems());
-
             nameEntry.getText().clear();
             addressEntry.getText().clear();
             phoneEntry.getText().clear();
             emailEntry.getText().clear();
 
-            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact added", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            //Return back to main activity
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result","add");
+            setResult(MainActivity.RESULT_OK,returnIntent);
+            finish();
         }
     }
 
