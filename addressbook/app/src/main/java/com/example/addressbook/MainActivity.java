@@ -1,10 +1,12 @@
 package com.example.addressbook;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,12 +16,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-
 public class MainActivity extends AppCompatActivity {
 
     private SQLiteDatabase database;
+    @SuppressLint("StaticFieldLeak")
     protected static ContactAdapter adapter;
     private ContactAdapter.OnItemClickListener listener;
 
@@ -82,23 +82,19 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getStringExtra("result");
 
-                if (result.equals("add")) {
+                if (result != null) {
                     adapter.swapCursor(getAllItems()); //Update cursor to display new contact
 
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "New contact added", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "why", Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
         }
         else if (requestCode == 2) {
             if(resultCode == Activity.RESULT_OK){
                 String result = data.getStringExtra("result");
 
-                if (result.equals("delete")) {
+                if (result != null) {
                     adapter.swapCursor(getAllItems()); //Update cursor to remove contact
 
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Contact deleted", Snackbar.LENGTH_LONG);

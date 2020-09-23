@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -114,6 +113,7 @@ public class DisplayContact extends AppCompatActivity {
         String address = cursor.getString(cursor.getColumnIndex(Database.ContactsEntry.COLUMN_ADDRESS));
         String number = cursor.getString(cursor.getColumnIndex(Database.ContactsEntry.COLUMN_PHONE_NUMBER));
         String email = cursor.getString(cursor.getColumnIndex(Database.ContactsEntry.COLUMN_EMAIL));
+        cursor.close();
 
         nameEntry.setText(name);
         addressEntry.setText(address);

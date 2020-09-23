@@ -2,7 +2,6 @@ package com.example.addressbook;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -89,18 +88,5 @@ public class AddNewContact extends AppCompatActivity {
             setResult(MainActivity.RESULT_OK,returnIntent);
             finish();
         }
-    }
-
-    //Method to get all contacts from the database
-    private Cursor getAllItems() {
-        return database.query(
-                Database.ContactsEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                Database.ContactsEntry.COLUMN_NAME
-        );
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private Context mContext;
-    protected Cursor mCursor;
+    private Cursor mCursor;
     private OnItemClickListener mListener;
 
     public ContactAdapter(Context context, Cursor cursor, OnItemClickListener listener) {
@@ -35,7 +34,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         private TextView numberText;
         private TextView emailText;
 
-        public ContactViewHolder(View itemView){
+        private ContactViewHolder(View itemView){
             super(itemView);
 
             nameText = itemView.findViewById(R.id.textview_name);
@@ -89,10 +88,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                 origin.startActivityForResult(intent, 2);
             }
         });
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("ContactAdapter", "onActivityResult");
     }
 
     @Override
