@@ -39,7 +39,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_marginBottom="60dp"
         android:tint="@android:color/white"
-        app:backgroundTint="#03A9F4"
+        app:backgroundTint="#685091"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

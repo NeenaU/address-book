@@ -27,7 +27,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         void onClick(View v, int position);
     }
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView nameText;
         private TextView addressText;

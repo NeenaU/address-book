@@ -30,8 +30,7 @@
         app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="@string/name_string" />
+        app:layout_constraintVertical_bias="1.0"/>
 
     <TextView
         android:id="@+id/address_text"
@@ -41,8 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/address_entry"
         app:layout_constraintEnd_toEndOf="@+id/name_entry"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/name_entry"
-        tools:text="@string/address_string" />
+        app:layout_constraintStart_toStartOf="@+id/name_entry"/>
 
     <TextView
         android:id="@+id/phone_number_text"
@@ -54,8 +52,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/address_entry"
         app:layout_constraintTop_toBottomOf="@+id/address_entry"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="@string/phone_number_string" />
+        app:layout_constraintVertical_bias="1.0"/>
 
     <TextView
         android:id="@+id/email_text"
@@ -65,8 +62,7 @@
         app:layout_constraintBottom_toTopOf="@+id/email_entry"
         app:layout_constraintEnd_toEndOf="@+id/phone_number_entry"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/phone_number_entry"
-        tools:text="@string/email_string" />
+        app:layout_constraintStart_toStartOf="@+id/phone_number_entry" />
 
     <EditText
         android:id="@+id/phone_number_entry"
@@ -74,7 +70,6 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:gravity="top|left"
         android:hint="@string/SomeHint"
         android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/email_entry"
@@ -90,7 +85,6 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:gravity="top|left"
         android:hint="@string/SomeHint"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/phone_number_entry"
